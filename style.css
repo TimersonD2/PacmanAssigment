@@ -1,0 +1,42 @@
+div.row div {
+    height: 60px;
+    width: 60px;
+    padding: 5px;
+    /* border: 1px solid black; */
+    display: inline-block;
+}
+
+body {
+    background-color: white;
+}
+
+.redtext {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
+
+.empty {
+    background-color: white;
+}
+
+.brick {
+    background-color: blue;
+}
+
+.pacman {
+    background-image: url('pacman.gif');
+    background-size: 70%;
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.coin {
+    background-image: url('coin.gif');
+    background-size: cover;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: pink; */
+}
