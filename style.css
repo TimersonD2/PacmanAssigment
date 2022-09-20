@@ -51,12 +51,31 @@ body {
 
 #score {
     height: 30px;
-    width: 50px;
+    width: 80px;
     border: 5px solid blue;
-    margin-top: 20px;
-    margin-left: 500px;
     color: blue;
     font-size:x-large;
     text-align: center;
     padding: 5px;
+}
+
+.bot-row {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 400px;
+    margin-right: 100px;
+    justify-content: space-around;
+}
+
+.coinBtn {
+    background-color: blue;
+    color: white;
+    font-size: medium;
+    /* font-weight: bold; */
+    height: 30px;
+    width: 100px;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    cursor: pointer;
 }
