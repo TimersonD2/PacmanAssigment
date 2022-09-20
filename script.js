@@ -50,16 +50,47 @@ function displayScore(){
 function resetCoins(){
     var numCoins = Math.floor(Math.random() * 20) + 25;
     // console.log(numCoins);
+
+    for (var y=1; y<world.length-1; y++){
+        for(var x=1; x<world[y].length-1; x++){
+            if(world[y][x] != 2){
+                world[y][x] = 0;
+            }
+        }
+    }
+
     for(var i=1; i<=200 && numCoins>0; i++){
         var y = Math.floor(Math.random() * (world.length-2)) + 1;
         var x = Math.floor(Math.random() * (world[0].length-2)) + 1;
         if(world[y][x] != 2 && !(x==pacman.x && y==pacman.y)){
+            // console.log(y+" , "+x+" , "+ " | "+numCoins);
+            if(world[y][x] == 1){
+                // console.log("Repeat");
+                continue;
+            }
             world[y][x] = 1;
             numCoins--;
-            // console.log(y+" , "+x+" , "+ " | "+pacman.y+" , "+pacman.x+" | "+numCoins);
         }
     }
     displayWorld();
+}
+
+function resetGame(){
+    score = 0;
+    resetCoins();
+    var found = false;
+    for (var y=1; y<world.length-2 && found==false; y++){
+        for(var x=1; x<world[y].length-2 && found==false; x++){
+            if(world[y][x] == 0){
+                found = true;
+                pacman.y = y;
+                pacman.x = x;
+                // console.log("Found at: "+y+" , "+x+"  Pacman at: "+pacman.y+" , "+pacman.x);
+            }
+        }
+    }
+    displayPacman();
+    displayScore();
 }
 
 displayWorld();
@@ -92,7 +123,7 @@ document.onkeydown = function(e){
 
     if(world[pacman.y][pacman.x] == 1){
         world[pacman.y][pacman.x] = 0;
-        score += 1;
+        score++;
         displayWorld();
         displayScore();
     }
