@@ -15,7 +15,10 @@ var ghost = {x:11, y:7};
 var score = 0;
 var maxScore = 1000;
 var lives = 3;
+var maxLives = 10;
 var attempts = 1;
+var lifeCost = 10;
+var caught = false;
 
 function displayWorld() {
     var output = '';
@@ -23,12 +26,8 @@ function displayWorld() {
         output += "\n<div class='row'>\n"
         for(var j=0; j<world[i].length; j++){
             if(world[i][j] == 2){output += "<div class='brick'></div>";}
-            else if(world[i][j] == 1){
-                output += "<div class='coin'></div>";
-            }
-            else if(world[i][j] == 0){
-                output += "<div class='empty'></div>";
-            }
+            else if(world[i][j] == 1){output += "<div class='coin'></div>";}
+            else if(world[i][j] == 0){output += "<div class='empty'></div>";}
         }
         output += "\n</div>"
     }
@@ -39,12 +38,10 @@ function displayPacman() {
     document.getElementById('pacman').style.top = pacman.y*60+"px";
     document.getElementById('pacman').style.left = pacman.x*60+"px";
 }
-
 function displayGhost() {
     document.getElementById('ghost').style.top = ghost.y*60+"px";
     document.getElementById('ghost').style.left = ghost.x*60+"px";
 }
-
 function displayScore(){
     document.getElementById('score').innerHTML = score;
     if(score >= maxScore) {
@@ -67,25 +64,21 @@ function displayScore(){
         document.getElementById('attempts-text').style.marginLeft = '55px';
     }
 }
-
-function displayAttempts(){
-    document.getElementById('attempts').innerHTML = attempts;
-}
-
-function displayLives(){
-    document.getElementById('lives').innerHTML = lives;
-}
+function displayAttempts(){document.getElementById('attempts').innerHTML = attempts;}
+function displayLives(){document.getElementById('lives').innerHTML = lives;}
 
 function buyLife(){
-    if(score>=100 && score<maxScore){
-        score = score-100;
+    if(score>=lifeCost && score<maxScore){
+        score = score-lifeCost;
         lives ++;
+        if(lives>=maxLives){lives=maxLives};
     }
     displayScore();
     displayLives();
 }
 
 function resetCoins(){
+    caught = false;
     if(lives > 0){attempts ++;}
     var numCoins = Math.floor(Math.random() * 20) + 25;
     for (var y=1; y<world.length-1; y++){
@@ -126,6 +119,7 @@ function resetGame(){
     score = 0;
     lives = 3;
     attempts = 1;
+    caught = false;
 
     var found = false;
     for (var y=1; y<world.length-2 && found==false; y++){
@@ -154,22 +148,22 @@ displayAttempts();
 displayLives();
 
 document.onkeydown = function(e){
-    if(e.keyCode == 37 && pacman.x > 0){
+    if(e.keyCode == 37 && pacman.x > 0 && caught==false){
         if(world[pacman.y][pacman.x-1] != 2){
             pacman.x --;
         }
     }
-    else if(e.keyCode == 38 && pacman.y > 0){
+    else if(e.keyCode == 38 && pacman.y > 0 && caught==false){
         if(world[pacman.y-1][pacman.x] != 2){
             pacman.y --;
         }
     }
-    else if(e.keyCode == 39 && pacman.x < world[pacman.y].length-1){
+    else if(e.keyCode == 39 && pacman.x < world[pacman.y].length-1 && caught==false){
         if(world[pacman.y][pacman.x+1] != 2){
             pacman.x ++;
         }
     }
-    else if(e.keyCode == 40 && pacman.y < world.length-1){
+    else if(e.keyCode == 40 && pacman.y < world.length-1 && caught==false){
         if(world[pacman.y+1][pacman.x] != 2){
             pacman.y ++;
         }
@@ -192,7 +186,8 @@ document.onkeydown = function(e){
         ghost.x ++;
     }
 
-    if(ghost.y==pacman.y && ghost.x==pacman.x && score<maxScore){
+    if(ghost.y==pacman.y && ghost.x==pacman.x && score<maxScore  && caught==false){
+        caught=true;
         lives--;
         if(lives<0){lives=0;}
         displayLives();
