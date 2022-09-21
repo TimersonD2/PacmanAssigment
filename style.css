@@ -3,6 +3,10 @@
     padding: 0px;
 }
 
+#container {
+    width: 780px;
+}
+
 .row {
     margin-bottom: 0px;
 }
@@ -95,8 +99,6 @@ body {
     display: flex;
     align-items: center;
     margin-top: 20px;
-    margin-left: 100px;
-    margin-right: 100px;
     justify-content: space-around;
 }
 
@@ -107,33 +109,37 @@ body {
 }
 
 .score {
-    margin-left: 150px;
     font-size: x-large;
     color: blue;
 }
 
 .attempts {
-    margin-left: 65px;
     font-size: x-large;
     color: darkgreen;
 }
 
 .lives {
-    margin-left: 50px;
+    margin-left: 40px;
     font-size: x-large;
     color: darkmagenta;
 }
 
 .rst-game {
-    margin-left: 40px;
+    margin-left: 30px;
     font-size: medium;
     color: red;
 }
 
 .rst-coins {
-    margin-left: 25px;
+    margin-left: 15px;
     font-size: medium;
     color: blue;
+}
+
+.buy-life {
+    margin-left: 15px;
+    font-size: medium;
+    color: green;
 }
 
 .coin-btn {
@@ -159,3 +165,16 @@ body {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.buy-btn {
+    background-color: green;
+    color: white;
+    font-size: medium;
+    height: 40px;
+    width: 100px;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
