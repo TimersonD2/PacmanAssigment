@@ -19,7 +19,8 @@ var ghost = {
     y:7
 }
 var score = 0;
-var lives = 1;
+var maxScore = 1000;
+var lives = 3;
 var attempts = 1;
 
 function displayWorld() {
@@ -56,6 +57,25 @@ function displayGhost() {
 
 function displayScore(){
     document.getElementById('score').innerHTML = score;
+    if(score >= maxScore) {
+        document.getElementById('score').style.backgroundColor = 'yellow';
+        document.getElementById('score').style.color = 'red';
+        document.getElementById('score').style.fontWeight = 'bolder';
+        document.getElementById('score-text').innerHTML = 'WINNER!';
+        document.getElementById('score-text').style.color = 'red';
+        document.getElementById('score-text').style.fontWeight = 'bold';
+        document.getElementById('score-text').style.marginLeft = '120px';
+        document.getElementById('attempts-text').style.marginLeft = '40px';
+    } else{
+        document.getElementById('score').style.backgroundColor = 'white';
+        document.getElementById('score').style.color = 'blue';
+        document.getElementById('score').style.fontWeight = 'normal';
+        document.getElementById('score-text').innerHTML = 'Score';
+        document.getElementById('score-text').style.color = 'blue';
+        document.getElementById('score-text').style.fontWeight = 'normal';
+        document.getElementById('score-text').style.marginLeft = '150px';
+        document.getElementById('attempts-text').style.marginLeft = '65px';
+    }
 }
 
 function displayAttempts(){
@@ -114,7 +134,7 @@ function resetCoins(){
 function resetGame(){
     resetCoins();
     score = 0;
-    lives = 1;
+    lives = 3;
     attempts = 1;
 
     var found = false;
@@ -168,10 +188,10 @@ document.onkeydown = function(e){
         }
     }
 
-    if(pacman.y < ghost.y && world[ghost.y-1][ghost.x] != 2){
+    if(pacman.y < ghost.y && world[ghost.y-1][ghost.x] != 2 && score<maxScore){
         ghost.y --;
     }
-    else if(pacman.y > ghost.y && world[ghost.y+1][ghost.x] != 2){
+    else if(pacman.y > ghost.y && world[ghost.y+1][ghost.x] != 2 && score<maxScore){
         ghost.y ++;
         if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2){
             ghost.x --;
@@ -179,14 +199,14 @@ document.onkeydown = function(e){
     }
     // console.log("Pacman: "+pacman.y+" , "+pacman.x)
     // console.log("Ghost: "+ghost.y+" , "+ghost.x)
-    if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2){
+    if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2 && score<maxScore){
         ghost.x --;
     }
-    if(ghost.y == pacman.y && pacman.x > ghost.x && world[ghost.y][ghost.x+1] != 2){
+    if(ghost.y == pacman.y && pacman.x > ghost.x && world[ghost.y][ghost.x+1] != 2 && score<maxScore){
         ghost.x ++;
     }
 
-    if(ghost.y==pacman.y && ghost.x==pacman.x){
+    if(ghost.y==pacman.y && ghost.x==pacman.x && score<maxScore){
         lives--;
         // console.log("YOU'RE DEAD");
         if(lives<0){
@@ -195,9 +215,12 @@ document.onkeydown = function(e){
         displayLives();
     }
 
-    if(world[pacman.y][pacman.x] == 1 && lives>0){
+    if(world[pacman.y][pacman.x] == 1 && lives>0 && score<maxScore){
         world[pacman.y][pacman.x] = 0;
         score++;
+        if(score >= maxScore){
+            score = maxScore;
+        }
         displayWorld();
         displayScore();
     }
