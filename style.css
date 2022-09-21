@@ -42,6 +42,18 @@ body {
     position: absolute;
 }
 
+#ghost {
+    background-image: url('ghost.png');
+    background-size: 70%;
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+    margin: 0px;
+    position: absolute;
+}
+
 .coin {
     background-image: url('coin.gif');
     background-size: cover;
@@ -59,23 +71,91 @@ body {
     padding: 5px;
 }
 
+#attempts {
+    height: 30px;
+    width: 50px;
+    border: 5px solid darkgreen;
+    color: darkgreen;
+    font-size:x-large;
+    text-align: center;
+    padding: 5px;
+}
+
+#lives {
+    height: 30px;
+    width: 50px;
+    border: 5px solid darkmagenta;
+    color: darkmagenta;
+    font-size:x-large;
+    text-align: center;
+    padding: 5px;
+}
+
 .bot-row {
     display: flex;
     align-items: center;
     margin-top: 20px;
-    margin-left: 300px;
+    margin-left: 100px;
     margin-right: 100px;
     justify-content: space-around;
 }
 
-.coinBtn {
+.bot-text {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.score {
+    margin-left: 150px;
+    font-size: x-large;
+    color: blue;
+}
+
+.attempts {
+    margin-left: 65px;
+    font-size: x-large;
+    color: darkgreen;
+}
+
+.lives {
+    margin-left: 50px;
+    font-size: x-large;
+    color: darkmagenta;
+}
+
+.rst-game {
+    margin-left: 40px;
+    font-size: medium;
+    color: red;
+}
+
+.rst-coins {
+    margin-left: 25px;
+    font-size: medium;
+    color: blue;
+}
+
+.coin-btn {
     background-color: blue;
     color: white;
     font-size: medium;
-    /* font-weight: bold; */
-    height: 30px;
+    height: 40px;
     width: 100px;
     border: 2px solid black;
     box-shadow: 3px 3px black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.reset-btn {
+    background-color: red;
+    color: white;
+    font-size: medium;
+    height: 40px;
+    width: 100px;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    border-radius: 10px;
     cursor: pointer;
 }

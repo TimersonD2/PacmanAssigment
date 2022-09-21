@@ -13,10 +13,20 @@
         <div id='content'></div>
         <div id='pacman'></div>
         <div class='bot-row'>
-            <div id='score'>0</div>
-            <button class='coinBtn' onclick=resetGame()>Reset Game</button>
-            <button class='coinBtn' onclick=resetCoins()>Reset Coins</button>
+            <div id='score'></div>
+            <div id='attempts'></div>
+            <div id='lives'></div>
+            <button class='reset-btn' onclick=resetGame()>Reset Game</button>
+            <button class='coin-btn' onclick=resetCoins()>Reset Coins</button>
         </div>
+        <div class='bot-text'>
+            <p class='score'>Score</p>
+            <p class='attempts'>Attempts</p>
+            <p class='lives'>Lives</p>
+            <p class='rst-game'>Reset Lives/Attempts</p>
+            <p class='rst-coins'>Use Before No Lives</p>
+        </div>
+        <div id='ghost'></div>
     </div>
 
     <script src="script.js"></script>

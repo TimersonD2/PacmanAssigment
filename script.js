@@ -14,7 +14,13 @@ var pacman = {
     x:1,
     y:1
 }
+var ghost = {
+    x:11,
+    y:7
+}
 var score = 0;
+var lives = 1;
+var attempts = 1;
 
 function displayWorld() {
     var output = '';
@@ -43,11 +49,27 @@ function displayPacman() {
     document.getElementById('pacman').style.left = pacman.x*60+"px";
 }
 
+function displayGhost() {
+    document.getElementById('ghost').style.top = ghost.y*60+"px";
+    document.getElementById('ghost').style.left = ghost.x*60+"px";
+}
+
 function displayScore(){
     document.getElementById('score').innerHTML = score;
 }
 
+function displayAttempts(){
+    document.getElementById('attempts').innerHTML = attempts;
+}
+
+function displayLives(){
+    document.getElementById('lives').innerHTML = lives;
+}
+
 function resetCoins(){
+    if(lives > 0){
+        attempts ++;
+    }
     var numCoins = Math.floor(Math.random() * 20) + 25;
     // console.log(numCoins);
 
@@ -65,19 +87,36 @@ function resetCoins(){
         if(world[y][x] != 2 && !(x==pacman.x && y==pacman.y)){
             // console.log(y+" , "+x+" , "+ " | "+numCoins);
             if(world[y][x] == 1){
-                // console.log("Repeat");
+                // console.log("Already a coin");
                 continue;
             }
             world[y][x] = 1;
             numCoins--;
         }
     }
+
+    var found = false;
+    for (var y=world.length-2; y>0 && found==false; y--){
+        for(var x=world[y].length-2; x>0 && found==false; x--){
+            if(world[y][x] == 1){
+                // console.log("Found a spot");
+                found = true;
+                ghost.y = y;
+                ghost.x = x;
+            }
+        }
+    }
     displayWorld();
+    displayGhost();
+    displayAttempts();
 }
 
 function resetGame(){
-    score = 0;
     resetCoins();
+    score = 0;
+    lives = 1;
+    attempts = 1;
+
     var found = false;
     for (var y=1; y<world.length-2 && found==false; y++){
         for(var x=1; x<world[y].length-2 && found==false; x++){
@@ -89,13 +128,21 @@ function resetGame(){
             }
         }
     }
+    ghost.y = 7;
+    ghost.x = 11;
     displayPacman();
+    displayGhost();
     displayScore();
+    displayAttempts();
+    displayLives();
 }
 
 displayWorld();
 displayPacman();
+displayGhost();
 displayScore();
+displayAttempts();
+displayLives();
 
 document.onkeydown = function(e){
     
@@ -121,12 +168,40 @@ document.onkeydown = function(e){
         }
     }
 
-    if(world[pacman.y][pacman.x] == 1){
+    if(pacman.y < ghost.y && world[ghost.y-1][ghost.x] != 2){
+        ghost.y --;
+    }
+    else if(pacman.y > ghost.y && world[ghost.y+1][ghost.x] != 2){
+        ghost.y ++;
+        if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2){
+            ghost.x --;
+        }
+    }
+    // console.log("Pacman: "+pacman.y+" , "+pacman.x)
+    // console.log("Ghost: "+ghost.y+" , "+ghost.x)
+    if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2){
+        ghost.x --;
+    }
+    if(ghost.y == pacman.y && pacman.x > ghost.x && world[ghost.y][ghost.x+1] != 2){
+        ghost.x ++;
+    }
+
+    if(ghost.y==pacman.y && ghost.x==pacman.x){
+        lives--;
+        // console.log("YOU'RE DEAD");
+        if(lives<0){
+            lives=0;
+        }
+        displayLives();
+    }
+
+    if(world[pacman.y][pacman.x] == 1 && lives>0){
         world[pacman.y][pacman.x] = 0;
         score++;
         displayWorld();
         displayScore();
     }
     displayPacman();
+    displayGhost();
 }
 
