@@ -3,23 +3,23 @@
     padding: 0px;
 }
 
-#container {
-    width: 780px;
-}
+/* #container {
+    width: 1250px;
+} */
 
 .row {
     margin-bottom: 0px;
 }
 
 div.row div {
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     margin: 0px;
     display: inline-block;
 }
 
 .row {
-    height: 60px;
+    height: 50px;
 }
 
 body {
@@ -40,8 +40,8 @@ body {
     /* background-size: cover; */
     background-repeat: no-repeat;
     background-position: center;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     margin: 0px;
     position: absolute;
 }
@@ -52,8 +52,8 @@ body {
     /* background-size: cover; */
     background-repeat: no-repeat;
     background-position: center;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     margin: 0px;
     position: absolute;
 }
@@ -95,17 +95,17 @@ body {
     padding: 5px;
 }
 
-.bot-row {
+#main {
     display: flex;
-    align-items: center;
-    margin-top: 20px;
-    justify-content: space-around;
 }
 
-.bot-text {
+.stat-col {
+    /* width: 100px; */
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 5px;
+    margin-left: 20px;
+    /* justify-content: space-around; */
 }
 
 .score {
@@ -119,25 +119,25 @@ body {
 }
 
 .lives {
-    margin-left: 40px;
+    /* margin-left: 40px; */
     font-size: x-large;
     color: darkmagenta;
 }
 
 .rst-game {
-    margin-left: 30px;
+    /* margin-left: 30px; */
     font-size: medium;
     color: red;
 }
 
 .rst-coins {
-    margin-left: 15px;
+    /* margin-left: 15px; */
     font-size: medium;
     color: blue;
 }
 
 .buy-life {
-    margin-left: 15px;
+    /* margin-left: 15px; */
     font-size: medium;
     color: green;
 }

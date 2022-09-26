@@ -10,25 +10,27 @@
 <body>
 
     <div id='container'>
-        <div id='content'></div>
-        <div id='pacman'></div>
-        <div class='bot-row'>
-            <div id='score'></div>
-            <div id='attempts'></div>
-            <div id='lives'></div>
-            <button class='reset-btn' onclick=resetGame()>Reset Game</button>
-            <button class='coin-btn' onclick=resetCoins()>Reset Coins</button>
-            <button class='buy-btn' onclick=buyLife()>Buy Life</button>
+        <div id='main'>
+            <div id='content'></div>
+            <div class='stat-col'>
+                <div id='score'></div>
+                <p id='score-text' class='score'>Score</p>
+                <div id='attempts'></div>
+                <p id='attempts-text' class='attempts'>Attempts</p>
+                <div id='lives'></div>
+                <p class='lives'>Lives</p>
+                <button class='reset-btn' onclick=resetGame()>Reset Game</button>
+                <p class='rst-game'>Reset Lives/Attempts</p>
+                <button class='coin-btn' onclick=resetCoins()>Reset Coins</button>
+                <p class='rst-coins'>Use Before No Lives</p>
+                <button class='buy-btn' onclick=buyLife()>Buy Life</button>
+                <p class='buy-life'>Buy Life (-250)</p>
+            </div>
         </div>
-        <div class='bot-text'>
-            <p id='score-text' class='score'>Score</p>
-            <p id='attempts-text' class='attempts'>Attempts</p>
-            <p class='lives'>Lives</p>
-            <p class='rst-game'>Reset Lives/Attempts</p>
-            <p class='rst-coins'>Use Before No Lives</p>
-            <p class='buy-life'>Buy Life (-100)</p>
+        <div id='icons'>
+            <div id='pacman'></div>
+            <div id='ghost'></div>
         </div>
-        <div id='ghost'></div>
     </div>
 
     <script src="script.js"></script>
