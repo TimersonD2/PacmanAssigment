@@ -1,23 +1,25 @@
 var world = [
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-    [2,1,2,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
+    [2,0,2,1,2,2,2,1,1,1,1,1,1,0,0,1,1,1,1,1,2],
     [2,1,2,1,2,2,2,1,2,2,2,1,2,1,1,1,2,1,2,1,2],
-    [2,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,2,1,2],
-    [2,1,2,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,2,1,2],
+    [2,1,1,1,0,1,1,1,1,0,1,1,2,2,2,1,1,1,2,1,2],
+    [2,1,2,1,2,2,2,1,1,1,1,0,1,0,1,1,1,1,2,1,2],
     [2,1,2,1,1,1,1,1,2,2,1,2,1,1,1,2,2,2,2,1,2],
-    [2,1,2,1,2,2,1,1,2,2,1,1,2,1,1,1,1,1,1,1,2],
-    [2,1,1,1,1,1,1,2,2,1,1,1,2,1,2,2,2,2,2,1,2],
-    [2,1,1,1,1,1,1,1,1,1,1,2,1,1,2,1,1,1,2,1,2],
-    [2,2,2,2,2,1,1,1,1,1,1,1,1,1,2,2,1,2,2,1,2],
-    [2,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,2],
-    [2,1,2,1,2,1,1,1,2,2,1,1,2,2,1,1,1,1,1,1,2],
+    [2,1,2,1,2,2,1,1,2,2,1,1,2,1,1,1,0,1,1,1,2],
+    [2,1,1,1,1,0,1,2,2,1,1,1,2,1,2,2,2,2,2,1,2],
+    [2,1,0,1,1,1,0,1,1,0,1,2,1,1,2,1,1,1,2,1,2],
+    [2,2,2,2,2,1,1,0,1,1,1,1,1,1,2,2,1,2,2,1,2],
+    [2,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,0,1,1,2],
+    [2,1,2,1,2,1,1,1,2,2,1,1,2,2,1,0,1,1,1,1,2],
     [2,1,2,1,2,1,1,2,2,2,2,1,1,1,1,2,1,2,2,1,2],
-    [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
+    [2,1,1,0,1,1,1,1,1,1,0,0,1,1,1,2,1,1,1,1,2],
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
 ];
 
+let worldHeight = world.length;
+let worldWidth = world[0].length;
 var pacman = {x:1, y:1};
-var ghost = {x:11, y:7};
+var ghost = {x:worldWidth-2, y:worldHeight-2};
 var score = 250;
 var maxScore = 5000;
 var lives = 3;
@@ -27,6 +29,9 @@ var lifeCost = 250;
 var minCoin = 100;
 var more = 20;
 var caught = false;
+const startingWorld = world.map((e) => {return [...e]});
+// console.log("Starting: "+startingWorld);
+
 
 function displayWorld() {
     var output = '';
@@ -87,6 +92,7 @@ function resetCoins(){
     if(lives > 0){attempts ++;}
     var numCoins = Math.floor(Math.random() * more) + minCoin;
     // console.log(numCoins);
+    // clear the maze of coins - blank
     for (var y=1; y<world.length-1; y++){
         for(var x=1; x<world[y].length-1; x++){
             if(world[y][x] != 2){
@@ -95,6 +101,7 @@ function resetCoins(){
         }
     }
 
+    // randomly place the determined number of coins in the maze
     for(var i=1; i<=200 && numCoins>0; i++){
         var y = Math.floor(Math.random() * (world.length-2)) + 1;
         var x = Math.floor(Math.random() * (world[0].length-2)) + 1;
@@ -105,6 +112,7 @@ function resetCoins(){
         }
     }
 
+    // starting bottom right place ghost in first location with a coin
     var found = false;
     for (var y=world.length-2; y>0 && found==false; y--){
         for(var x=world[y].length-2; x>0 && found==false; x--){
@@ -121,26 +129,27 @@ function resetCoins(){
 }
 
 function resetGame(){
-    resetCoins();
+    world = startingWorld.map((e)=>{return [...e]})
+    // console.log("World: "+world);
     score = 0;
     lives = 3;
     attempts = 1;
     caught = false;
 
+    pacman.y = 1;
+    pacman.x = 1;
+    // starting bottom right place ghost in first location with a coin
     var found = false;
-    for (var y=1; y<world.length-2 && found==false; y++){
-        for(var x=1; x<world[y].length-2 && found==false; x++){
-            if(world[y][x] == 0){
+    for (var y=world.length-2; y>0 && found==false; y--){
+        for(var x=world[y].length-2; x>0 && found==false; x--){
+            if(world[y][x] == 1){
                 found = true;
-                pacman.y = y;
-                pacman.x = x;
+                ghost.y = y;
+                ghost.x = x;
             }
         }
     }
-    pacman.y = 1;
-    pacman.x = 1;
-    ghost.y = 7;
-    ghost.x = 11;
+    displayWorld();
     displayPacman();
     displayGhost();
     displayScore();
@@ -148,6 +157,8 @@ function resetGame(){
     displayLives();
 }
 
+
+//Inital Display of Pacman World
 displayWorld();
 displayPacman();
 displayGhost();
@@ -156,6 +167,8 @@ displayAttempts();
 displayLives();
 
 document.onkeydown = function(e){
+    //count coins - check for zero
+
     if(e.keyCode == 37 && pacman.x > 0 && caught==false){
         if(world[pacman.y][pacman.x-1] != 2){
             pacman.x --;
@@ -177,23 +190,46 @@ document.onkeydown = function(e){
         }
     }
 
-    if(pacman.y < ghost.y && world[ghost.y-1][ghost.x] != 2 && score<maxScore){
+
+    // pick a direction - looks for walls
+    var upOk = false;
+    var downOk = false;
+    var leftOk = false;
+    var rightOk = false;
+    let pacmanAbove = false;
+    let pacmanBelow = false;
+    let pacmanLeft = false;
+    let pacmanRight = false;
+    let moveGhost = false;
+
+    // allow the Ghost to move approx. 1 in 3 times
+    let move = Math.floor(Math.random() * 2);
+    if (move == 1){moveGhost = true}
+
+    if (pacman.y<ghost.y){pacmanAbove=true}
+    if (pacman.y>ghost.y){pacmanBelow=true}
+    if (pacman.x<ghost.x){pacmanLeft=true}
+    if (pacman.x>ghost.x){pacmanRight=true}
+
+    if (world[ghost.y-1][ghost.x] != 2){upOk=true}
+    if (world[ghost.y+1][ghost.x] != 2){downOk=true}
+    if(((pacmanAbove && upOk) || (pacmanBelow && !downOk && upOk)) && moveGhost){
         ghost.y --;
     }
-    else if(pacman.y > ghost.y && world[ghost.y+1][ghost.x] != 2 && score<maxScore){
+    else if(((pacmanBelow && downOk) || (pacmanAbove && !upOk && downOk)) && moveGhost){
         ghost.y ++;
-        if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2){
-            ghost.x --;
-        }
     }
 
-    if(ghost.y == pacman.y && pacman.x < ghost.x && world[ghost.y][ghost.x-1] != 2 && score<maxScore){
+    if (world[ghost.y][ghost.x-1] != 2){leftOk=true}
+    if (world[ghost.y][ghost.x+1] != 2){rightOk=true}
+    if(((pacmanLeft && leftOk) || (pacmanRight && !rightOk && leftOk)) && moveGhost){
         ghost.x --;
     }
-    if(ghost.y == pacman.y && pacman.x > ghost.x && world[ghost.y][ghost.x+1] != 2 && score<maxScore){
+    if(((pacmanRight && rightOk) || (pacmanLeft && !leftOk && rightOk)) && moveGhost){
         ghost.x ++;
     }
 
+    // check for ghost catching pacman - same location? - decrement lives
     if(ghost.y==pacman.y && ghost.x==pacman.x && score<maxScore  && caught==false){
         caught=true;
         lives--;
@@ -201,6 +237,7 @@ document.onkeydown = function(e){
         displayLives();
     }
 
+    //increment score if pacman location has a coin - clear the coin
     if(world[pacman.y][pacman.x] == 1 && lives>0 && score<maxScore){
         world[pacman.y][pacman.x] = 0;
         score++;
@@ -212,5 +249,10 @@ document.onkeydown = function(e){
     }
     displayPacman();
     displayGhost();
+    console.log("Ghost: "+ghost.y+" , "+ghost.x);
+    console.log("Look Left: "+world[ghost.y][ghost.x-1]);
+    console.log("Look Right: "+world[ghost.y][ghost.x+1]);
+    console.log("Look Up: "+world[ghost.y-1][ghost.x]);
+    console.log("Look Down: "+world[ghost.y+1][ghost.x]);
 }
 
