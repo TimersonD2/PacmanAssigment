@@ -32,8 +32,13 @@ let numCoins = 0;
 var more = 40;
 var caught = false;
 const startingWorld = world.map((e) => {return [...e]});
+let easyMode = false;
 // console.log("Starting: "+startingWorld);
 
+function updateMode(){
+    easyMode = mode.checked;
+    console.log(easyMode);
+}
 
 function displayWorld() {
     var output = '';
@@ -225,9 +230,10 @@ document.onkeydown = function(e){
     let pacmanRight = false;
     let moveGhost = false;
 
-    // allow the Ghost to move approx. 1 in 2 times
-    let move = Math.floor(Math.random() * 2);
-    move = 1;
+    let move = 0;
+    // if Easy Mode is ON move Ghost approx every other keypress ELSE move every keypress
+    if (easyMode == true){move = Math.floor(Math.random() * 2);} else{move = 1;}
+
     if (move == 1 && numCoins>0){moveGhost = true}
     // console.log("Move Gohst: "+moveGhost);
 

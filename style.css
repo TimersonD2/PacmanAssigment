@@ -98,6 +98,13 @@ body {
     padding: 5px;
 }
 
+#mode {
+    margin-top: 25px;
+    color: greenyellow;
+    border: 5px;
+
+}
+
 #main {
     display: flex;
 }
@@ -188,5 +195,21 @@ body {
     box-shadow: 3px 3px black;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.container {
+    margin-top: 25px;
+    cursor: pointer;
+    font-size: medium;
+    color: orange;
+}
+
+  /* Create a custom checkbox */
+.checkmark {
+    color: blue;
+    font-size: large;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
 }
 

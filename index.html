@@ -21,7 +21,12 @@
                 <p id='attempts-text' class='attempts'>Attempts</p>
                 <div id='num-coins'></div>
                 <p class='num-coins'>Remaining Coins</p>
-                <button class='reset-btn' onclick=resetGame()>Reset Game</button>
+                <!-- <input type='checkbox' id='mode'>
+                <label for='mode'>Easy Mode</label> -->
+                <label class="container">Easy Mode
+                    <input type="checkbox" id='mode' onclick=updateMode()>
+                    <span class="checkmark"></span>
+                </label>                <button class='reset-btn' onclick=resetGame()>Reset Game</button>
                 <p class='rst-game'>Reset Lives/Attempts</p>
                 <button class='coin-btn' onclick=resetCoins()>Reset Coins</button>
                 <p class='rst-coins'>Use Before No Lives</p>
