@@ -21,7 +21,7 @@ let worldHeight = world.length;
 let worldWidth = world[0].length;
 var pacman = {x:1, y:1};
 var ghost = {x:worldWidth-2, y:worldHeight-2};
-var score = 100;
+var score = 0;
 var maxScore = 5000;
 var lives = 3;
 var maxLives = 10;
@@ -105,11 +105,13 @@ function countCoins() {
 
 function resetCoins(){
     console.log("Reset Coins");
-    caught = false;
     // increment attempts if resetting coins while there are coins remaining
-    if(lives > 0 && numCoins>0){attempts ++;}
-    var numCoins = Math.floor(Math.random() * more) + minCoin;
-    // console.log(numCoins);
+    if(lives > 0 && numCoins>0){
+        attempts ++;
+        caught = false;
+    }
+    var coins = Math.floor(Math.random() * more) + minCoin;
+    // console.log(coins);
     // clear the maze of coins - blank
     for (var y=1; y<world.length-1; y++){
         for(var x=1; x<world[y].length-1; x++){
@@ -119,14 +121,14 @@ function resetCoins(){
         }
     }
 
-    // randomly place the determined number of coins in the maze
-    for(var i=1; i<=400 && numCoins>0; i++){
+    // randomly place the determined number of coins in the maze - try 400 times to place all coins
+    for(var i=1; i<=400 && coins>0; i++){
         var y = Math.floor(Math.random() * (world.length-2)) + 1;
         var x = Math.floor(Math.random() * (world[0].length-2)) + 1;
         if(world[y][x] != 2 && !(x==pacman.x && y==pacman.y)){
             if(world[y][x] == 1){continue;}
             world[y][x] = 1;
-            numCoins--;
+            coins--;
         }
     }
 
@@ -212,7 +214,7 @@ document.onkeydown = function(e){
     }
 
 
-    // pick a direction - looks for walls
+    // pick a direction for Ghost - looks for walls
     var upOk = false;
     var downOk = false;
     var leftOk = false;
@@ -225,6 +227,7 @@ document.onkeydown = function(e){
 
     // allow the Ghost to move approx. 1 in 2 times
     let move = Math.floor(Math.random() * 2);
+    move = 1;
     if (move == 1 && numCoins>0){moveGhost = true}
     // console.log("Move Gohst: "+moveGhost);
 
