@@ -1,3 +1,4 @@
+// Inital maze: 0=empty space, 1=coin, 2=brick
 var world = [
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
     [2,0,2,1,2,2,2,1,1,1,1,1,1,0,0,1,1,1,1,1,2],
@@ -20,14 +21,15 @@ let worldHeight = world.length;
 let worldWidth = world[0].length;
 var pacman = {x:1, y:1};
 var ghost = {x:worldWidth-2, y:worldHeight-2};
-var score = 250;
+var score = 100;
 var maxScore = 5000;
 var lives = 3;
 var maxLives = 10;
 var attempts = 1;
 var lifeCost = 250;
-var minCoin = 100;
-var more = 20;
+var minCoin = 105;
+let numCoins = 0;
+var more = 40;
 var caught = false;
 const startingWorld = world.map((e) => {return [...e]});
 // console.log("Starting: "+startingWorld);
@@ -75,6 +77,10 @@ function displayScore(){
 }
 function displayAttempts(){document.getElementById('attempts').innerHTML = attempts;}
 function displayLives(){document.getElementById('lives').innerHTML = lives;}
+function displayNumCoins(){
+    countCoins();
+    document.getElementById('num-coins').innerHTML = numCoins;
+}
 
 function buyLife(){
     if(score>=lifeCost && score<maxScore){
@@ -86,10 +92,22 @@ function buyLife(){
     displayLives();
 }
 
+function countCoins() {
+    numCoins = 0;
+    for (var y=1; y<world.length-1; y++){
+        for(var x=1; x<world[y].length-1; x++){
+            if(world[y][x] == 1){
+                numCoins++;
+            }
+        }
+    }
+}
+
 function resetCoins(){
     console.log("Reset Coins");
     caught = false;
-    if(lives > 0){attempts ++;}
+    // increment attempts if resetting coins while there are coins remaining
+    if(lives > 0 && numCoins>0){attempts ++;}
     var numCoins = Math.floor(Math.random() * more) + minCoin;
     // console.log(numCoins);
     // clear the maze of coins - blank
@@ -102,7 +120,7 @@ function resetCoins(){
     }
 
     // randomly place the determined number of coins in the maze
-    for(var i=1; i<=200 && numCoins>0; i++){
+    for(var i=1; i<=400 && numCoins>0; i++){
         var y = Math.floor(Math.random() * (world.length-2)) + 1;
         var x = Math.floor(Math.random() * (world[0].length-2)) + 1;
         if(world[y][x] != 2 && !(x==pacman.x && y==pacman.y)){
@@ -126,6 +144,7 @@ function resetCoins(){
     displayWorld();
     displayGhost();
     displayAttempts();
+    displayNumCoins();
 }
 
 function resetGame(){
@@ -155,6 +174,7 @@ function resetGame(){
     displayScore();
     displayAttempts();
     displayLives();
+    displayNumCoins();
 }
 
 
@@ -165,6 +185,7 @@ displayGhost();
 displayScore();
 displayAttempts();
 displayLives();
+displayNumCoins();
 
 document.onkeydown = function(e){
     //count coins - check for zero
@@ -202,9 +223,10 @@ document.onkeydown = function(e){
     let pacmanRight = false;
     let moveGhost = false;
 
-    // allow the Ghost to move approx. 1 in 3 times
+    // allow the Ghost to move approx. 1 in 2 times
     let move = Math.floor(Math.random() * 2);
-    if (move == 1){moveGhost = true}
+    if (move == 1 && numCoins>0){moveGhost = true}
+    // console.log("Move Gohst: "+moveGhost);
 
     if (pacman.y<ghost.y){pacmanAbove=true}
     if (pacman.y>ghost.y){pacmanBelow=true}
@@ -241,18 +263,14 @@ document.onkeydown = function(e){
     if(world[pacman.y][pacman.x] == 1 && lives>0 && score<maxScore){
         world[pacman.y][pacman.x] = 0;
         score++;
-        if(score >= maxScore){
-            score = maxScore;
-        }
+        if(score >= maxScore){score = maxScore;}
+        numCoins--;
+        if(numCoins<0){numCoins=0;}
         displayWorld();
         displayScore();
+        displayNumCoins();
     }
     displayPacman();
     displayGhost();
-    console.log("Ghost: "+ghost.y+" , "+ghost.x);
-    console.log("Look Left: "+world[ghost.y][ghost.x-1]);
-    console.log("Look Right: "+world[ghost.y][ghost.x+1]);
-    console.log("Look Up: "+world[ghost.y-1][ghost.x]);
-    console.log("Look Down: "+world[ghost.y+1][ghost.x]);
 }
 

@@ -65,7 +65,7 @@ body {
     background-position: center;
 }
 
-#score {
+#score, #num-coins {
     height: 30px;
     width: 80px;
     border: 5px solid blue;
@@ -131,6 +131,12 @@ body {
 }
 
 .rst-coins {
+    /* margin-left: 15px; */
+    font-size: medium;
+    color: blue;
+}
+
+.num-coins {
     /* margin-left: 15px; */
     font-size: medium;
     color: blue;
