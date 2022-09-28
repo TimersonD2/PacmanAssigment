@@ -1,43 +1,102 @@
 // Inital maze: 0=empty space, 1=coin, 2=brick
-var world = [
+var world1 = [
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-    [2,0,2,1,2,2,2,1,1,1,1,1,1,0,0,1,1,1,1,1,2],
-    [2,1,2,1,2,2,2,1,2,2,2,1,2,1,1,1,2,1,2,1,2],
-    [2,1,1,1,0,1,1,1,1,0,1,1,2,2,2,1,1,1,2,1,2],
-    [2,1,2,1,2,2,2,1,1,1,1,0,1,0,1,1,1,1,2,1,2],
-    [2,1,2,1,1,1,1,1,2,2,1,2,1,1,1,2,2,2,2,1,2],
-    [2,1,2,1,2,2,1,1,2,2,1,1,2,1,1,1,0,1,1,1,2],
-    [2,1,1,1,1,0,1,2,2,1,1,1,2,1,2,2,2,2,2,1,2],
-    [2,1,0,1,1,1,0,1,1,0,1,2,1,1,2,1,1,1,2,1,2],
-    [2,2,2,2,2,1,1,0,1,1,1,1,1,1,2,2,1,2,2,1,2],
-    [2,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,0,1,1,2],
-    [2,1,2,1,2,1,1,1,2,2,1,1,2,2,1,0,1,1,1,1,2],
-    [2,1,2,1,2,1,1,2,2,2,2,1,1,1,1,2,1,2,2,1,2],
-    [2,1,1,0,1,1,1,1,1,1,0,0,1,1,1,2,1,1,1,1,2],
+    [2,0,1,0,1,1,1,0,1,1,1,0,1,1,1,1,0,1,1,0,2],
+    [2,1,2,1,2,1,2,1,2,2,2,2,2,1,2,1,2,1,2,1,2],
+    [2,1,1,1,2,1,2,0,1,1,1,1,1,1,1,1,1,1,1,1,2],
+    [2,2,2,1,2,1,2,1,2,2,2,2,2,0,2,1,2,1,2,1,2],
+    [2,2,2,1,2,1,2,1,1,0,1,1,1,1,1,1,1,1,1,1,2],
+    [2,1,2,1,2,0,2,1,2,2,0,1,2,1,2,1,2,1,2,1,2],
+    [2,1,1,1,1,0,1,1,2,0,0,1,2,1,1,1,1,0,1,0,2],
+    [2,1,2,1,2,1,2,1,2,2,1,2,2,1,2,2,2,2,2,1,2],
+    [2,1,1,1,0,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,2],
+    [2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2,0,2,2,1,2],
+    [2,1,1,0,1,1,1,1,2,1,2,1,2,1,1,0,1,1,1,0,2],
+    [2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2,2,2,2,1,2],
+    [2,0,1,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,2],
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
 ];
 
-let worldHeight = world.length;
-let worldWidth = world[0].length;
-var pacman = {x:1, y:1};
-var ghost = {x:worldWidth-2, y:worldHeight-2};
-var score = 0;
-var maxScore = 5000;
-var lives = 3;
-var maxLives = 10;
-var attempts = 1;
-var lifeCost = 250;
-var minCoin = 105;
-let numCoins = 0;
-var more = 40;
-var caught = false;
-const startingWorld = world.map((e) => {return [...e]});
-let easyMode = false;
-// console.log("Starting: "+startingWorld);
+var world2 = [
+    [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+    [2,0,2,1,2,2,2,1,1,1,1,1,1,0,0,1,1,1,1,1,2],
+    [2,1,2,1,2,2,2,1,2,2,2,1,2,1,1,1,2,1,2,1,2],
+    [2,1,1,1,0,1,1,1,2,2,1,1,2,2,2,1,1,1,2,1,2],
+    [2,1,2,1,2,2,2,1,1,2,1,0,1,0,1,1,1,1,2,1,2],
+    [2,1,2,1,1,1,1,1,1,1,1,2,1,1,1,2,2,2,2,1,2],
+    [2,1,2,1,2,2,2,1,2,2,1,1,2,1,1,1,0,1,1,0,2],
+    [2,0,1,1,1,0,1,1,2,0,1,2,1,1,2,2,1,2,2,1,2],
+    [2,1,2,1,2,1,2,1,2,2,1,1,2,1,2,1,1,1,2,1,2],
+    [2,2,2,2,2,1,1,0,1,1,1,2,1,0,2,1,1,1,2,1,2],
+    [2,1,1,1,1,1,2,2,2,2,1,1,2,1,2,2,2,2,2,1,2],
+    [2,1,2,1,2,1,1,2,2,1,1,2,1,1,1,0,1,1,1,1,2],
+    [2,1,2,1,2,1,2,2,2,2,1,1,2,1,2,1,2,1,2,1,2],
+    [2,1,1,0,1,1,1,1,1,1,0,0,1,1,2,1,2,1,1,1,2],
+    [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+];
+var world3 = [
+    [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+    [2,0,1,1,2,2,2,1,1,1,1,2,2,1,1,1,0,1,1,1,2],
+    [2,1,2,1,2,2,2,1,2,2,0,1,2,1,2,1,2,1,2,1,2],
+    [2,1,1,1,0,1,1,1,1,1,1,1,1,1,2,1,1,1,2,1,2],
+    [2,2,2,1,2,2,0,2,2,2,2,2,2,0,1,1,2,1,1,0,2],
+    [2,2,2,1,2,2,1,2,1,1,1,1,2,1,2,2,2,2,2,1,2],
+    [2,1,2,1,2,2,1,2,1,2,2,1,2,1,1,1,0,1,1,1,2],
+    [2,1,1,1,1,1,1,2,1,1,2,1,2,1,2,2,2,1,2,1,2],
+    [2,2,2,1,1,2,1,2,2,2,2,1,2,1,2,1,1,1,2,1,2],
+    [2,2,2,2,0,1,1,0,1,1,1,1,1,1,2,2,2,2,2,1,2],
+    [2,1,1,1,1,1,2,1,2,2,1,1,1,1,1,1,1,0,1,0,2],
+    [2,1,2,1,2,1,2,1,2,1,1,2,2,2,1,2,1,2,2,1,2],
+    [2,1,2,2,2,1,2,1,2,2,1,1,1,2,1,1,1,2,2,1,2],
+    [2,1,1,0,1,1,1,1,1,1,0,1,1,1,1,2,1,1,1,1,2],
+    [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+];
 
-function updateMode(){
-    easyMode = mode.checked;
-    console.log(easyMode);
+
+// define variables
+let world = world1.map((e) => {return [...e]});
+let startingWorld = world1.map((e) => {return [...e]});
+
+const worldHeight = world.length;
+const worldWidth = world[0].length;
+let pacman = {x:1, y:1};
+let ghost = {x:worldWidth-2, y:worldHeight-2};
+let cherry = {x:9, y:7};
+let score = 0;
+const maxScore = 5000;
+let lives = 3;
+const maxLives = 10;
+let attempts = 1;
+const lifeCost = 250;
+const minCoin = 120;
+const moreCoins = 30;
+let numCoins = 0;
+let caught = false;
+let easyMode = false;
+let maze = 1;
+let ateCherry = false;
+
+function changeMaze() {
+    maze++;
+    if(maze>3){maze=1;}
+    if (maze == 1) {
+        cherry = {x:9, y:7};
+        world = world1.map((e)=>{return [...e]})
+        startingWorld = world1.map((e)=>{return [...e]})
+    } else if (maze == 2) {
+        cherry = {x:12, y:9};
+        world = world2.map((e)=>{return [...e]})
+        startingWorld = world2.map((e)=>{return [...e]})
+    } else if (maze ==3) {
+        cherry = {x:9, y:7};
+        world = world3.map((e)=>{return [...e]})
+        startingWorld = world3.map((e)=>{return [...e]})
+    } else {
+        world = world1.map((e)=>{return [...e]})
+        startingWorld = world1.map((e)=>{return [...e]})
+    }
+    // console.log("Starting: "+startingWorld);
+    resetGame();
 }
 
 function displayWorld() {
@@ -61,6 +120,15 @@ function displayPacman() {
 function displayGhost() {
     document.getElementById('ghost').style.top = ghost.y*50+"px";
     document.getElementById('ghost').style.left = ghost.x*50+"px";
+}
+function displayCherry() {
+    if(!ateCherry){
+        document.getElementById('cherry').hidden = false;
+        document.getElementById('cherry').style.top = cherry.y*50+"px";
+        document.getElementById('cherry').style.left = cherry.x*50+"px";
+    } else if (ateCherry) {
+        document.getElementById('cherry').hidden = true;
+    }
 }
 function displayScore(){
     document.getElementById('score').innerHTML = score;
@@ -87,6 +155,24 @@ function displayNumCoins(){
     document.getElementById('num-coins').innerHTML = numCoins;
 }
 
+//Inital Display of Pacman World
+displayWorld();
+displayPacman();
+displayGhost();
+displayScore();
+displayAttempts();
+displayLives();
+displayNumCoins();
+displayCherry();
+
+// update current game mode
+function updateMode(){
+    easyMode = mode.checked;
+    // console.log(easyMode);
+}
+
+
+// if enough points available add a life and decrement score
 function buyLife(){
     if(score>=lifeCost && score<maxScore){
         score = score-lifeCost;
@@ -97,6 +183,7 @@ function buyLife(){
     displayLives();
 }
 
+// count the current number of coins in the maze
 function countCoins() {
     numCoins = 0;
     for (var y=1; y<world.length-1; y++){
@@ -108,6 +195,8 @@ function countCoins() {
     }
 }
 
+// reset the maze with a random number of coins - min coins + random more coins
+// Pacman remains in current position Ghost moves to bottom right somewhere on a coin
 function resetCoins(){
     console.log("Reset Coins");
     // increment attempts if resetting coins while there are coins remaining
@@ -115,7 +204,7 @@ function resetCoins(){
         attempts ++;
         caught = false;
     }
-    var coins = Math.floor(Math.random() * more) + minCoin;
+    var coins = Math.floor(Math.random() * moreCoins) + minCoin;
     // console.log(coins);
     // clear the maze of coins - blank
     for (var y=1; y<world.length-1; y++){
@@ -127,7 +216,7 @@ function resetCoins(){
     }
 
     // randomly place the determined number of coins in the maze - try 400 times to place all coins
-    for(var i=1; i<=400 && coins>0; i++){
+    for(var i=1; i<=500 && coins>0; i++){
         var y = Math.floor(Math.random() * (world.length-2)) + 1;
         var x = Math.floor(Math.random() * (world[0].length-2)) + 1;
         if(world[y][x] != 2 && !(x==pacman.x && y==pacman.y)){
@@ -154,14 +243,18 @@ function resetCoins(){
     displayNumCoins();
 }
 
+// Reset the game statistics, place Pacman top left Ghost bottom right, reset coin maze to default
 function resetGame(){
+    //set current coin maze to the original maze
     world = startingWorld.map((e)=>{return [...e]})
     // console.log("World: "+world);
     score = 0;
     lives = 3;
     attempts = 1;
     caught = false;
+    ateCherry = false;
 
+    // place Pacman top left
     pacman.y = 1;
     pacman.x = 1;
     // starting bottom right place ghost in first location with a coin
@@ -178,25 +271,15 @@ function resetGame(){
     displayWorld();
     displayPacman();
     displayGhost();
+    displayCherry();
     displayScore();
     displayAttempts();
     displayLives();
     displayNumCoins();
 }
 
-
-//Inital Display of Pacman World
-displayWorld();
-displayPacman();
-displayGhost();
-displayScore();
-displayAttempts();
-displayLives();
-displayNumCoins();
-
 document.onkeydown = function(e){
-    //count coins - check for zero
-
+    // move Pacman using key code if desired location is not a brick and hasn't been caught by Ghost
     if(e.keyCode == 37 && pacman.x > 0 && caught==false){
         if(world[pacman.y][pacman.x-1] != 2){
             pacman.x --;
@@ -219,11 +302,11 @@ document.onkeydown = function(e){
     }
 
 
-    // pick a direction for Ghost - looks for walls
-    var upOk = false;
-    var downOk = false;
-    var leftOk = false;
-    var rightOk = false;
+    // check for available directions for Ghost - looks for walls
+    let upOk = false;
+    let downOk = false;
+    let leftOk = false;
+    let rightOk = false;
     let pacmanAbove = false;
     let pacmanBelow = false;
     let pacmanLeft = false;
@@ -237,11 +320,13 @@ document.onkeydown = function(e){
     if (move == 1 && numCoins>0){moveGhost = true}
     // console.log("Move Gohst: "+moveGhost);
 
+    // check if Pacman left, right, above, below Ghost
     if (pacman.y<ghost.y){pacmanAbove=true}
     if (pacman.y>ghost.y){pacmanBelow=true}
     if (pacman.x<ghost.x){pacmanLeft=true}
     if (pacman.x>ghost.x){pacmanRight=true}
 
+    // first move up or down based on Pacman and bricks
     if (world[ghost.y-1][ghost.x] != 2){upOk=true}
     if (world[ghost.y+1][ghost.x] != 2){downOk=true}
     if(((pacmanAbove && upOk) || (pacmanBelow && !downOk && upOk)) && moveGhost){
@@ -251,6 +336,7 @@ document.onkeydown = function(e){
         ghost.y ++;
     }
 
+    // second move left or right based on Pacman and bricks
     if (world[ghost.y][ghost.x-1] != 2){leftOk=true}
     if (world[ghost.y][ghost.x+1] != 2){rightOk=true}
     if(((pacmanLeft && leftOk) || (pacmanRight && !rightOk && leftOk)) && moveGhost){
@@ -279,6 +365,16 @@ document.onkeydown = function(e){
         displayScore();
         displayNumCoins();
     }
+
+    if(pacman.y == cherry.y && pacman.x == cherry.x && score<maxScore && ateCherry==false){
+        score=score+20;
+        ateCherry = true;
+        if(score >= maxScore){score = maxScore;}
+        displayWorld();
+        displayCherry();
+        displayScore();
+    }
+
     displayPacman();
     displayGhost();
 }
