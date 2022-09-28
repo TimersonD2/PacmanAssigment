@@ -44,6 +44,7 @@ body {
     width: 50px;
     margin: 0px;
     position: absolute;
+    /* transform:rotate(90deg); */
 }
 
 #ghost {

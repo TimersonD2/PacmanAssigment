@@ -282,21 +282,25 @@ document.onkeydown = function(e){
     // move Pacman using key code if desired location is not a brick and hasn't been caught by Ghost
     if(e.keyCode == 37 && pacman.x > 0 && caught==false){
         if(world[pacman.y][pacman.x-1] != 2){
+            document.getElementById('pacman').style.transform = 'rotate(180deg)';
             pacman.x --;
         }
     }
     else if(e.keyCode == 38 && pacman.y > 0 && caught==false){
         if(world[pacman.y-1][pacman.x] != 2){
+            document.getElementById('pacman').style.transform = 'rotate(270deg)';
             pacman.y --;
         }
     }
     else if(e.keyCode == 39 && pacman.x < world[pacman.y].length-1 && caught==false){
         if(world[pacman.y][pacman.x+1] != 2){
+            document.getElementById('pacman').style.transform = 'rotate(0deg)';
             pacman.x ++;
         }
     }
     else if(e.keyCode == 40 && pacman.y < world.length-1 && caught==false){
         if(world[pacman.y+1][pacman.x] != 2){
+            document.getElementById('pacman').style.transform = 'rotate(90deg)';
             pacman.y ++;
         }
     }
